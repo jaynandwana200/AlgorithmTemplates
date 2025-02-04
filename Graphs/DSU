@@ -1,0 +1,26 @@
+class disjoint{
+    vector<long long> parent,size;
+    public:
+    disjoint(long long n){
+        parent.resize(n+1,1);
+        size.resize(n+1,1);
+        for(int i = 0;i <= n;i++)parent[i] = i;
+    }
+    long long findParent(long long x){
+        if(x == parent[x])return x;
+        return parent[x] = findParent(parent[x]);
+    }
+    void unionBySize(long long x,long long y){
+        long long xParent = findParent(x);
+        long long yParent = findParent(y);
+        if(xParent == yParent)return;
+        if(size[xParent] > size[yParent]){
+            size[xParent] += size[yParent];
+            parent[yParent] = xParent;
+        }
+        else{
+            size[yParent] += size[xParent];
+            parent[xParent] = yParent;
+        }
+    }
+};
